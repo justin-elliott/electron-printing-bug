@@ -1,0 +1,15 @@
+{
+  "name": "electron-printing-bug",
+  "version": "1.0.0",
+  "description": "An application demonstrating printing issues in Electron 4.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "athenaDesktop <athenadesktop@athenahealth.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.0.4"
+  }
+}

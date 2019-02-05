@@ -1,0 +1,90 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.book {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls {
+  flex: 0 1 auto;
+  border-bottom: 1px solid black;
+  background-color: #e8e8e8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.preview {
+  flex: 1 1 auto;
+  background-color: #f8f8f8;
+  display: flex;
+}
+
+#pages {
+  display: none;
+}
+
+#page {
+  margin: auto;
+  border: 1px solid #e0e0e0;
+  filter: drop-shadow(3px 3px 3px #c0c0c0);
+}
+
+input,
+button {
+  font: 16px Arial;
+}
+
+.controls > * {
+  margin: 6px;
+}
+
+#page-count,
+#print {
+  flex: 0 1 auto;
+}
+
+#render-progress {
+  flex: 1 1 auto;
+}
+
+@media print {
+  @page {
+    size: 612px 792px;
+  }
+
+  .controls,
+  .preview {
+    display: none;
+  }
+
+  body {
+    background: transparent none;
+    height: fit-content;
+  }
+
+  #pages {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  #pages > img {
+    display: block;
+    overflow: visible;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  #pages > img:last-child {
+    page-break-after: avoid;
+  }
+}
