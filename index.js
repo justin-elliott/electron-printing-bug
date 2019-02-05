@@ -74,8 +74,6 @@ function addNextPage(pages, pageNumber, pageCount, progress) {
     
       window.print();
     
-      console.log('Clear pages');
-    
       // clear all pages
       const emptyPages = pages.cloneNode(false);
       pages.parentNode.replaceChild(emptyPages, pages);
