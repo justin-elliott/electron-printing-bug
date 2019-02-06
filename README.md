@@ -19,8 +19,20 @@ Once (if) the document is printed, the resulting PDF should consist of the appro
 
 ## Problems encountered
 
-* Printing will sometimes silently fail, leaving a zero-sized document.
-* The final pages of the document will be blank.
-* The application will crash.
+Typically in my environment, problems will occur in the mid-700 page count range. 700 page print runs will typically succeed, although I have seen one failure (out of memory).
 
-(Typically in my environment, these problems will occur in the mid-700 page count range.)
+* Printing will silently fail, leaving a zero-sized document.
+* The final pages of the document will be blank.
+* The process will run out of memory, issuing a detail-free trace, as below.
+
+```
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+#
+# Fatal process OOM in insufficient memory to create an Isolate
+#
+```
