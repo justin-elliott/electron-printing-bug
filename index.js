@@ -44,42 +44,36 @@ function pageCount() {
   return value < min ? min : (value > max ? max : value);
 }
 
-function printPages() {
+async function printPages() {
   const pages = document.getElementById('pages');
   const progress = document.getElementById('render-progress');
 
-  addNextPage(pages, 1, pageCount(), progress);
+  for (let i = 1, count = pageCount(); i <= count; i++) {
+    await addPage(pages, i);
+    progress.value = i / count;
+  }
+
+  window.print();
+    
+  // clear all pages
+  const emptyPages = pages.cloneNode(false);
+  pages.parentNode.replaceChild(emptyPages, pages);
 }
 
-function addNextPage(pages, pageNumber, pageCount, progress) {
-  const canvas = createPage(pageNumber);
-  canvas.toBlob(blob => {
-    const img = document.createElement('img');
-    const url = URL.createObjectURL(blob);
-
-    img.src = url;
-
-    // img dimensions @ 72dpi
-    img.width = PAGE_WIDTH;
-    img.height = PAGE_HEIGHT;
-
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      progress.value = pageNumber / pageCount;
-
-      if (pageNumber < pageCount) {
-        setTimeout(addNextPage, 0, pages, pageNumber + 1, pageCount, progress);
-        return;
-      }
-    
-      window.print();
-    
-      // clear all pages
-      const emptyPages = pages.cloneNode(false);
-      pages.parentNode.replaceChild(emptyPages, pages);
-    };
-
-    pages.appendChild(img);
+function addPage(pages, pageNumber) {
+  return new Promise(resolve => {
+    const canvas = createPage(pageNumber);
+    canvas.toBlob(blob => {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(blob);
+      img.width = PAGE_WIDTH;
+      img.height = PAGE_HEIGHT;
+      img.onload = event => {
+        URL.revokeObjectURL(event.target.src);
+        resolve();
+      };
+      pages.appendChild(img);
+    });
   });
 }
 
